@@ -1,7 +1,15 @@
 #!/usr/bin/python
 
-# This script allows the user to draw sequences from set of genomes in fasta format. The genomes
-# should have identical coordinates produced by mapping to the same reference assembly. 
+# This script draws sequences of a given size (and separated by a given window size) from a genome conensus fasta.
+# It opens all ".fa" genome consensus fasta files in the "directory", draws out sequences of the specified size, 
+# and writes a new fasta file for each "gene". 
+
+# !!Warning!! This script does not use an aligner, and instead writes a list of sequences drawn from the same genomic coordinates
+# across a set of genome consensus fasta samples. Therefore, genome consensus fastas must be from the same reference genome with
+# identical coordinates.
+
+# Window ("step_size") can be set to zero if you want every part of the genome!
+
 # For Jensen, Gaughran et al. 2022 we used ANGSD -doFasta 2 to create each consensus fasta.
 
 import sys
@@ -15,10 +23,6 @@ directory = "/fasta/dir/"
 
 #Specify the directory where the individual aligned loci will be written:
 gene_dir = "/individual/loci/dir/"
-
-# fasta_list_name = sys.argv[1]
-# fasta_list_f = open (fasta_list_name, "r")
-# fasta_list = fasta_list_f.readlines()
 
 seq_size = 1000 # Size of your sequence. 500bp-1kb is good for BPP, while larger sizes are appropriate for other analyses.
 step_size = 100000 # Size of interval between sequences. Make sure it's enough to allow independence/unlinked loci.
